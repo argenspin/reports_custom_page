@@ -190,15 +190,22 @@
                 </p>
             </div>
             <!-- Message shown at the last page of the document  -->
-            <div name="generic_message" class="row" style="page-break-inside: avoid">
+            <!-- only show if it is not invoiced -->
+            <div t-if="doc.invoice_status != 'invoiced'" name="generic_message" class="row" style="page-break-inside: avoid">
                 <br/><br/>
                 <span>We sincerely hope that the above offer will meet your requirements. Please do not hesitate to contact the undersigned for any further clarification / information required.
                 </span>
-
                 <br/><br/>
-                <span><b>Mr. Michael Sebastian / GM</b></span>
+                <!-- It is necessary to fill these details when creating employee show it in the message -->
+
+                <!-- salesman name -->
+                <span t-if="doc.user_id.name"><b>Mr. <span t-field="doc.user_id.name"/></b></span>  
+                <!-- job title  -->
+                <span t-if="doc.user_id.function"><b>/ <span t-field="doc.user_id.function"/></b></span>
                 <br/>
-                <span><b>Mob: +971 52 242 5959, +971 42 673 917</b></span>
+                <!-- mobile number -->
+                <span t-if="doc.user_id.mobile"><b>Mob: <span t-field="doc.user_id.mobile"/></b></span>  
+                <br/>
             </div>
         </div>
         </t>
