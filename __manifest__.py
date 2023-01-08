@@ -12,6 +12,7 @@
     "data": [
             "views/layouts.xml",
             "views/res_company_views.xml",
+            "views/paper_format.xml",
             "report/report_layout.xml",
             ],
     "depends": ["base","web","sale"],
