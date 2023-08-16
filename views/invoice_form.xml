@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- inherit invoice form to add sale_order_id and invoice type to identify if it is
+        down payment or regular invoice. sale_order_id is used to get all products used in the down payment invoice    
+    -->
+    <record id="account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">        
+            <xpath expr="//field[@name='partner_id']" position="after">
+            <field name="sale_order_id"/>
+            <field name="invoice_type"/>
+            </xpath>
+
+            <!-- add field to turn seal pdf reports on/off -->
+            <xpath expr="//group[@name='sale_info_group']" position="inside">
+                <field name="pdf_seal"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

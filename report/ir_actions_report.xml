@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_saleorder_with_images" model="ir.actions.report">
+        <field name="name">Quotation / Order with Images</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reports_custom_page.report_saleorder_with_images</field>
+        <field name="report_file">reports_custom_page.report_saleorder_with_images</field>
+        <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- <report
+    id="action_report_saleorder_with_images"
+    string="Quotation / Order with Images"
+    model="sale.order"
+    report_type="qweb-pdf"
+    file="reports_custom_page.report_saleorder_with_images"
+    name="reports_custom_page.report_saleorder_with_images"
+    print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+ /> -->
+</odoo>

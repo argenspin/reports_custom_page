@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend company view to add accreditations images field -->
+    <record id="company_form_extended" model="ir.ui.view">
+        <field name="name">res.company.extended.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="favicon"]' position="after">
+                <field name="accreditations" widget="image" class="float-start oe_avatar" groups="base.group_no_one"/>
+                <field name="company_seal" widget="image" class="float-start oe_avatar" groups="base.group_no_one"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
