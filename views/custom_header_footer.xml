@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="header_footer_layout_with_bank_details">
+        <t t-set="company" t-value="user.company_id" />
+
+        <!-- header -->
+        <div t-attf-class="header"
+            t-att-style="report_header_style">
+            <div class="o_boxed_header">
+                <div class="row mb-8">
+                    <div class="col-6">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                            style="max-height: 45px;" alt="Logo" />
+                        <div class="mt-3">
+                            <img t-if="company.accreditations"
+                                t-att-src="image_data_uri(company.accreditations)"
+                                style="max-height: 38px;"
+                                alt="Accreditations" />
+                        </div>
+                    </div>
+
+                    <div class="col-6 text-end mb1 first-page">
+                        <div class="mt0 h4" t-field="company.report_header" />
+                        <div name="company_address" class=" mb4">
+                            <span t-if="company.company_details"
+                                t-field="company.company_details" />
+                            <!-- <span class="inline text-nowrap"
+                        t-if="company.partner_id.vat"><t
+                            t-out="
+                        'VAT' " />: <span
+                            t-field="company.partner_id.vat" /></span>  -->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-1">
+                    <div style="border-bottom: 1px solid black;" />
+                </div>
+            </div>
+        </div>
+
+        <!-- body -->
+        <div
+            t-attf-class="article o_report_layout_standard {{ 'o_report_layout_background' if company.layout_background in ['Geometric', 'Custom'] else '' }}"
+            t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});"
+            t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+            t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="pt-5">
+                <!--  This div ensures that the address is not cropped by the header.  -->
+                <t t-call="web.address_layout" />
+            </div>
+            <t t-out="0" />
+        </div>
+
+        <!-- footer -->
+        <div t-attf-class="footer o_standard_footer">
+            <div class="col-12 mt-2">
+                <div style="border-bottom: 1px solid black;" />
+            </div>
+            <div class="fa d-flex justify-content-between">
+                <div class="px-1">
+                    <!-- this div is to provide help in centering the divs below -->
+                </div>
+                <div class="mr-5 mb-0">
+                    <span class="px-2 fa-whatsapp"> +971 56 641 1161</span>
+                </div>
+                <div class="mr-5 mb-0">
+                    <span class="px-2 fa-envelope">
+                        <a> projects@alkatheebme.com</a>
+                    </span>
+                </div>
+                <div class="mr-5 mb-0">
+                    <span class="px-2 fa-envelope">
+                        <a> info@alkatheebme.com</a>
+                    </span>
+                </div>
+                <div class="mr-5 mb-0">
+                    <span class="px-2 fa-globe">
+                        <a> http://www.alkatheebme.com</a>
+                    </span>
+                </div>
+                <!-- this div is to prevent text from exceeding the black line -->
+                <div class="px-2"></div>
+            </div>
+            <div class="">
+                <div style="border-bottom: 1px solid black;" class="mb-2 mt-0" />
+
+                <div class="text-center mb-0 ">
+                    <p class="mb-0">Bank Details</p>
+                    <p class="mb-0">Account Name : Al Katheeb Technical Services LLC</p>
+                    <p class="mb-0">Bank : RAK BANK ( Branch- Al Qusais, Dubai)</p>
+                    <!-- page number is combined with this field to save space -->
+                    <!-- <div class="float-right inline-block" ><span class="page" /> / <span
+                    class="topage" />
+            </div> -->
+
+                </div>
+                <span class="mb-0 text-center" style="padding-right:250px;padding-left:220px">Acc #:03728262850014, IBAN: AE790400000372826285001 </span>
+                <span t-if="report_type == 'pdf'" class="text-nowrap mb-0 text-right">
+                    <span class="page" /> / <span t-if="report_type == 'pdf'" class="topage" />
+                </span>
+            </div>
+            <!-- <p class="text-nowrap mb-0 py-0" t-esc="str(company.report_footer)"/> -->
+            <!-- <div style="border-bottom: 1px solid black;" class="mb-0 mt-0 col-12" />
+    <div
+            class="text-center mb-0">
+       
+
+        </div>
+    </div> -->
+        </div>
+    </template>
+
+    <template id="header_footer_layout">
+        <t t-set="company" t-value="user.company_id" />
+
+        <!-- header -->
+        <div t-attf-class="header"
+            t-att-style="report_header_style">
+            <div class="o_boxed_header">
+                <div class="row mb-8">
+                    <div class="col-6">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                            style="max-height: 45px;" alt="Logo" />
+                        <div class="mt-3">
+                            <img t-if="company.accreditations"
+                                t-att-src="image_data_uri(company.accreditations)"
+                                style="max-height: 38px;"
+                                alt="Accreditations" />
+                        </div>
+                    </div>
+
+                    <div class="col-6 text-end mb1 first-page">
+                        <div class="mt0 h4" t-field="company.report_header" />
+                        <div name="company_address" class=" mb4">
+                            <span t-if="company.company_details"
+                                t-field="company.company_details" />
+                            <!-- <span class="inline text-nowrap"
+                        t-if="company.partner_id.vat"><t
+                            t-out="
+                        'VAT' " />: <span
+                            t-field="company.partner_id.vat" /></span>  -->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-1">
+                    <div style="border-bottom: 1px solid black;" />
+                </div>
+            </div>
+        </div>
+
+        <!-- body -->
+        <div
+            t-attf-class="article o_report_layout_standard {{ 'o_report_layout_background' if company.layout_background in ['Geometric', 'Custom'] else '' }}"
+            t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});"
+            t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+            t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="pt-5">
+                <!--  This div ensures that the address is not cropped by the header.  -->
+                <t t-call="web.address_layout" />
+            </div>
+            <t t-out="0" />
+        </div>
+
+        <div t-attf-class="footer o_standard_footer">
+            <div class="col-12 mt-2">
+                <div style="border-bottom: 1px solid black;" />
+            </div>
+            <div class="fa d-flex justify-content-between">
+                <div class="px-1">
+                    <!-- this div is to provide help in centering the divs below -->
+                </div>
+                <div class="mr-5 mb-0">
+                    <span class="px-2 fa-whatsapp"> +971 56 641 1161</span>
+                </div>
+                <div class="mr-5 mb-0">
+                    <span class="px-2 fa-envelope"><a> projects@alkatheebme.com</a></span>
+                </div>
+                <div class="mr-5 mb-0">
+                    <span class="px-2 fa-envelope"><a> info@alkatheebme.com</a></span>
+                </div>
+                <div class="mr-5 mb-0">
+                    <span class="px-2 fa-globe"> <a> http://www.alkatheebme.com</a></span>
+                </div>
+                <!-- this div is to prevent text from exceeding the black line -->
+                <div class="px-2"></div>
+            </div>
+            <div style="border-bottom: 1px solid black;" class="mb-2 mt-0" />
+            <!-- <div style="padding-top:75px"></div> -->
+            <div class="text-center mb-1" style="font-size:18px">
+                <div class="mr-5 mb-0">
+                    <span class="px-2"> Al Katheeb Technical Services LLC</span>
+                </div>
+                <div class="mr-5 mb-0">
+                    <span class="px-2 fa-map-marker"> Falak Holding, Warehouse 6, Dubai Investment Park Phase 2</span>
+                    <span class="px-2">|</span>
+                    <span class="px-2 fa-map-marker"> Al Watanyah, Warehouse 1, Industrial-4, Al Qusais</span>
+
+                </div>
+            </div>
+
+            <span t-if="report_type == 'pdf'" class="float-right" style="padding-left:950px" >
+                <span class="page" /> / <span t-if="report_type == 'pdf'" class="topage" />
+            </span>
+        </div>
+
+    </template>
+</odoo>

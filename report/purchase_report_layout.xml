@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- RFQ report -->
+    <template id="report_purchasequotation_document_inherit"
+        inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+            <t t-call="reports_custom_page.header_footer_layout">
+                <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+                <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat" /> <!-- So that it
+                appears in the footer of the report instead of the company VAT if it's set -->
+                <t t-set="address">
+                    <!-- <div t-field="o.partner_id"
+                        t-options='{"widget":
+                    "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True,
+                    "phone_icons": True}' /> -->
+                    <p style="font-size:18px;" class="mb-0">
+                        <b>Vendor:</b>
+                    </p>
+                    <div class="mb-0 mt-1 px-4">
+                        <p class="text-nowrap mb-0" t-if="o.partner_id.name"
+                            t-field="o.partner_id.name" />
+                        <!-- below p tag is used to replace the shitty contact widget -->
+                        <p class="text-nowrap mb-0"
+                            t-if="o.partner_id.state_id and o.partner_id.country_id"
+                            t-esc="o.partner_id.state_id.name + ', ' + o.partner_id.country_id.name" />
+                        <p class="text-nowrap mb-0" t-if="o.partner_id.email">Email: <span
+                                t-field="o.partner_id.email" /></p>
+                        <p class="text-nowrap mb-0" t-if="o.partner_id.phone">Phone: <span
+                                t-field="o.partner_id.phone" /></p>
+                        <p class="text-nowrap mb-0" t-if="o.partner_id.vat">
+                            <t t-out="'TRN: '" />
+                            <span t-field="o.partner_id.vat" />
+                        </p>
+                    </div>
+
+                </t>
+                <!-- Here since shipping address for alkatheeb is same as company address, company
+                address is used instead of shippiing address  -->
+                <!-- <t t-if="o.dest_address_id">
+                    <t t-set="information_block">
+                <strong>Shipping address:</strong>
+                        <div
+                t-field="o.dest_address_id"
+                            t-options='{"widget":
+                "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons":
+                True}'
+                            name="purchase_shipping_address" />
+                    </t>
+                </t> -->
+                <t t-if="o.company_id">
+                    <t t-set="information_block">
+                        <p style="font-size:18px;" class="mb-0">
+                            <b>Shipping address:</b>
+                        </p>
+                        <div class="mt-1 mb-0 px-4">
+                            <span t-if="o.company_id.company_details"
+                                t-field="o.company_id.company_details" />
+                        </div>
+
+                    </t>
+                </t>
+                <div class="page">
+                    <div class="oe_structure" />
+
+                    <h2 class="mt-4" style="font-size:25px; color:#101F6C">Request for Quotation <span
+                            t-field="o.name" /></h2>
+
+                    <table class="table table-sm mt-4">
+                        <thead style="display: table-row-group">
+                            <tr>
+                                <th name="th_description">
+                                    <strong>Description</strong>
+                                </th>
+                                <th name="th_expected_date" class="text-center">
+                                    <strong>Expected Date</strong>
+                                </th>
+                                <th name="th_quantity" class="text-end">
+                                    <strong>Qty</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.order_line" t-as="order_line">
+                                <tr
+                                    t-att-class="'bg-200 fw-bold o_line_section' if order_line.display_type == 'line_section' else 'fst-italic o_line_note' if order_line.display_type == 'line_note' else ''">
+                                    <t t-if="not order_line.display_type">
+                                        <td id="product">
+                                            <span t-field="order_line.name" />
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="order_line.date_planned" />
+                                        </td>
+                                        <td class="text-end">
+                                            <span t-field="order_line.product_qty" />
+                                            <span t-field="order_line.product_uom"
+                                                groups="uom.group_uom" />
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td colspan="99" id="section">
+                                            <span t-field="order_line.name" />
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <p t-field="o.notes" class="mt-4" />
+
+                    <div class="oe_structure" />
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="report_purchasequotation_inherit" inherit_id="purchase.report_purchasequotation">
+        <xpath expr="//t[@t-call='web.html_container']" position="replace">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="reports_custom_page.report_purchasequotation_document_inherit"
+                        t-lang="o.partner_id.lang" />
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- purchase order report -->
+
+    <template id="report_purchaseorder_document_inherit"
+        inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+            <t t-call="reports_custom_page.header_footer_layout">
+                <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+                <t t-set="address">
+                    <!-- <div t-field="o.partner_id"
+                        t-options='{"widget":
+                    "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True,
+                    "phone_icons": True}' /> -->
+                    <p style="font-size:18px;" class="mb-0">
+                        <b>Vendor:</b>
+                    </p>
+                    <div class="mb-0 mt-1 px-4">
+                        <p class="text-nowrap mb-0" t-if="o.partner_id.name"
+                            t-field="o.partner_id.name" />
+                        <!-- below p tag is used to replace the shitty contact widget -->
+                        <p class="text-nowrap mb-0"
+                            t-if="o.partner_id.state_id and o.partner_id.country_id"
+                            t-esc="o.partner_id.state_id.name + ', ' + o.partner_id.country_id.name" />
+                        <p class="text-nowrap mb-0" t-if="o.partner_id.email">Email: <span
+                                t-field="o.partner_id.email" /></p>
+                        <p class="text-nowrap mb-0" t-if="o.partner_id.phone">Phone: <span
+                                t-field="o.partner_id.phone" /></p>
+                        <p class="text-nowrap mb-0" t-if="o.partner_id.vat">
+                            <t
+                                t-out="'TRN: '" /> : <span t-field="o.partner_id.vat" /></p>
+                    </div>
+                </t>
+                <!-- Here since shipping address for alkatheeb is same as company address, company
+                address is used instead of shippiing address  -->
+                <!-- <t t-if="o.dest_address_id">
+                    <t t-set="information_block">
+                <strong>Shipping address:</strong>
+                        <div
+                t-field="o.dest_address_id"
+                            t-options='{"widget":
+                "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons":
+                True}'
+                            name="purchase_shipping_address" />
+                    </t>
+                </t> -->
+                <t t-if="o.company_id">
+                    <t t-set="information_block">
+                        <p style="font-size:18px;" class="mb-0">
+                            <b>Shipping address:</b>
+                        </p>
+                        <div class="mb-0 mt-1 px-4">
+                            <span t-if="o.company_id.company_details"
+                                t-field="o.company_id.company_details" />
+                        </div>
+
+                    </t>
+                </t>
+                <div class="page">
+                    <div class="oe_structure" />
+
+                    <div class="mt-4">
+                        <h2 style="font-size:25px; color:#101F6C"
+                            t-if="o.state in ['draft', 'sent', 'to approve']">Request for Quotation
+                            #<span t-field="o.name" /></h2>
+                        <h2 style="font-size:25px; color:#101F6C"
+                            t-if="o.state in ['purchase', 'done']">Purchase Order #<span
+                                t-field="o.name" /></h2>
+                        <h2 style="font-size:25px; color:#101F6C" t-if="o.state == 'cancel'">Cancelled
+                            Purchase Order #<span
+                                t-field="o.name" /></h2>
+                    </div>
+
+                    <div id="informations" class="row mt-4 mb32">
+                        <div t-if="o.user_id" class="col-3 bm-2">
+                            <strong>Purchase Representative:</strong>
+                            <p t-field="o.user_id" class="m-0" />
+                        </div>
+                        <div t-if="o.partner_ref" class="col-3 bm-2">
+                            <strong>Your Order Reference:</strong>
+                            <p t-field="o.partner_ref" class="m-0" />
+                        </div>
+                        <div t-if="o.state in ['purchase','done'] and o.date_approve"
+                            class="col-3 bm-2">
+                            <strong>Order Date:</strong>
+                            <p t-field="o.date_approve" class="m-0" />
+                        </div>
+                        <div t-elif="o.date_order" class="col-3 bm-2">
+                            <strong>Order Deadline:</strong>
+                            <p t-field="o.date_order" class="m-0" />
+                        </div>
+                    </div>
+                    <!-- removed data req column -->
+                    <table class="table table-sm o_main_table mt-2">
+                        <thead>
+                            <tr>
+                                <th name="th_description">
+                                    <strong>Description</strong>
+                                </th>
+                                <th name="th_taxes">
+                                    <strong>Taxes</strong>
+                                </th>
+                                <!-- <th name="th_date_req" class="text-center">
+                                    <strong>Date
+                                Req.</strong>
+                                </th> -->
+                                <th name="th_quantity" class="text-end">
+                                    <strong>Qty</strong>
+                                </th>
+                                <th name="th_price_unit" class="text-end">
+                                    <strong>Unit Price</strong>
+                                </th>
+                                <th name="th_amount" class="text-end">
+                                    <strong>Amount</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="current_subtotal" t-value="0" />
+                            <t t-foreach="o.order_line" t-as="line">
+                                <t t-set="current_subtotal"
+                                    t-value="current_subtotal + line.price_subtotal"
+                                    groups="account.group_show_line_subtotals_tax_excluded" />
+                                <t t-set="current_subtotal"
+                                    t-value="current_subtotal + line.price_total"
+                                    groups="account.group_show_line_subtotals_tax_included" />
+
+                                <tr
+                                    t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                    <t t-if="not line.display_type">
+                                        <td id="product">
+                                            <span t-field="line.name" />
+                                        </td>
+                                        <td name="td_taxes">
+                                            <span
+                                                t-esc="', '.join(map(lambda x: x.name, line.taxes_id))" />
+                                        </td>
+                                        <!-- <td class="text-center">
+                                            <span
+                                        t-field="line.date_planned" />
+                                        </td> -->
+                                        <td class="text-end">
+                                            <span t-field="line.product_qty" />
+                                            <span t-field="line.product_uom.name"
+                                                groups="uom.group_uom" />
+                                        </td>
+                                        <td class="text-end">
+                                            <span t-field="line.price_unit" />
+                                        </td>
+                                        <td class="text-end">
+                                            <span t-field="line.price_subtotal"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}' />
+                                        </td>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_section'">
+                                        <td colspan="99" id="section">
+                                            <span t-field="line.name" />
+                                        </td>
+                                        <t t-set="current_section" t-value="line" />
+                                        <t t-set="current_subtotal" t-value="0" />
+                                    </t>
+                                    <t t-if="line.display_type == 'line_note'">
+                                        <td colspan="99" id="note">
+                                            <span t-field="line.name" />
+                                        </td>
+                                    </t>
+                                </tr>
+                                <t
+                                    t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                                    <tr class="is-subtotal text-end">
+                                        <td colspan="99" id="subtotal">
+                                            <strong class="mr16">Subtotal</strong>
+                                            <span
+                                                t-esc="current_subtotal"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                            />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div id="total" class="row justify-content-end">
+                        <div class="col-4">
+                            <table class="table table-sm">
+                                <t t-set="tax_totals" t-value="o.tax_totals" />
+                                <t t-call="account.document_tax_totals" />
+                            </table>
+                        </div>
+                    </div>
+
+                    <p t-field="o.notes" class="mt-4" />
+                    <div class="oe_structure" />
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="report_purchaseorder_inherit" inherit_id="purchase.report_purchaseorder">
+        <xpath expr="//t[@t-call='web.html_container']" position="replace">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="reports_custom_page.report_purchaseorder_document_inherit"
+                        t-lang="o.partner_id.lang" />
+                </t>
+            </t>
+        </xpath>
+
+    </template>
+</odoo>
