@@ -94,6 +94,19 @@
                             </div>
                         </div>
 
+                        <div class="row mt-2 mb-2" id="informations_2">
+                            <div t-if="doc.lpo_no" class="col col-2 mw-100 mb-1"
+                                name="lpo_no">
+                                <strong>LPO No:</strong>
+                                <p class="m-0" t-field="doc.lpo_no" />
+                            </div>
+                            <div t-if="doc.project_name" class="col-auto col-3 mw-100 mb-1"
+                                name="project_name">
+                                <strong>Project:</strong>
+                                <p class="m-0" t-field="doc.project_name" />
+                            </div>
+                        </div>
+
                         <!-- Is there a discount on at least one line? -->
                         <t t-set="lines_to_report" t-value="doc._get_order_lines_to_report()" />
                         <t t-set="display_discount"
@@ -385,6 +398,19 @@
                             <div t-if="doc.user_id.name" class="col-auto col-3 mw-100 mb-1">
                                 <strong>Salesperson:</strong>
                                 <p class="m-0" t-field="doc.user_id" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-2 mb-2" id="informations_2">
+                            <div t-if="doc.lpo_no" class="col col-2 mw-100 mb-1"
+                                name="lpo_no">
+                                <strong>LPO No:</strong>
+                                <p class="m-0" t-field="doc.lpo_no" />
+                            </div>
+                            <div t-if="doc.project_name" class="col-auto col-3 mw-100 mb-1"
+                                name="project_name">
+                                <strong>Project:</strong>
+                                <p class="m-0" t-field="doc.project_name" />
                             </div>
                         </div>
 

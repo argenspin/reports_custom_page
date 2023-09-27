@@ -6,6 +6,8 @@ from itertools import groupby
 
 class SaleOrderInherit(models.Model):
     _inherit="sale.order"
+    project_name = fields.Char(string="Project")
+    lpo_no = fields.Char(string="LPO No.")
     def _prepare_invoice(self):
         """
         Prepare the dict of values to create the new invoice for a sales order. This method may be

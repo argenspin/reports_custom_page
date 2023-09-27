@@ -11,6 +11,7 @@
     "installable": True,
     "data": [
             "views/invoice_form.xml",
+            "views/sale_form.xml",
             "views/layouts.xml",
             "views/custom_header_footer.xml",
             "views/res_company_views.xml",
