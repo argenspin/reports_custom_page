@@ -45,6 +45,9 @@
                         </span> -->
                                 <!-- below p tag is used to replace the shitty contact widget -->
                                 <p class="text-nowrap mb-0"
+                                    t-if="o.partner_id.zip"
+                                    t-esc="o.partner_id.zip" />
+                                <p class="text-nowrap mb-0"
                                     t-if="o.partner_id.state_id and o.partner_id.country_id"
                                     t-esc="o.partner_id.state_id.name + ', ' + o.partner_id.country_id.name" />
                                 <p class="text-nowrap mb-0" t-if="o.partner_id.email">Email: <span
@@ -73,6 +76,9 @@
                                 t-field="doc.partner_id.country_id.name"/>
                         </span> -->
                                 <!-- below p tag is used to replace the shitty contact widget -->
+                                <p class="text-nowrap mb-0"
+                                    t-if="o.partner_id.zip"
+                                    t-esc="o.partner_id.zip" />
                                 <p class="text-nowrap mb-0"
                                     t-if="o.partner_id.state_id and o.partner_id.country_id"
                                     t-esc="o.partner_id.state_id.name + ', ' + o.partner_id.country_id.name" />
