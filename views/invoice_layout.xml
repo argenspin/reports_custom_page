@@ -149,6 +149,19 @@
                             </div>
                         </div>
 
+                        <div class="row mt-2 mb-2" id="informations_2">
+                            <div t-if="o.lpo_no" class="col col-2 mw-100 mb-1"
+                                name="lpo_no">
+                                <strong>LPO No:</strong>
+                                <p class="m-0" t-field="o.lpo_no" />
+                            </div>
+                            <div t-if="o.project_name" class="col-auto col-3 mw-100 mb-1"
+                                name="project_name">
+                                <strong>Project:</strong>
+                                <p class="m-0" t-field="o.project_name" />
+                            </div>
+                        </div>
+
                         <div class="mb-2" t-if="o.invoice_type == 'Down payment'">
                             <span class="mb-1"><strong>Products:</strong></span>
 

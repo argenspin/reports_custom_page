@@ -35,6 +35,8 @@ class SaleOrderInherit(models.Model):
             'transaction_ids': [Command.set(self.transaction_ids.ids)],
             'company_id': self.company_id.id,
             'invoice_line_ids': [],
+            'project_name': self.project_name,
+            'lpo_no': self.lpo_no,
         }
 
     
