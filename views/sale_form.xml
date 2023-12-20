@@ -9,6 +9,11 @@
             <field name="project_name"/>
             <field name="lpo_no"/>
         </xpath>
+        <xpath expr="//field[@name='user_id']" position="after">
+
+            <field name="contact_person_id"/>
+            <field name="show_contact_info_pdf"/>
+        </xpath>
     </field>
 </record>
 </odoo>

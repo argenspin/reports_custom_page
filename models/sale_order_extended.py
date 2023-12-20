@@ -6,6 +6,8 @@ from itertools import groupby
 
 class SaleOrderInherit(models.Model):
     _inherit="sale.order"
+    contact_person_id = fields.Many2one('res.partner',string="Person to Contact")
+    show_contact_info_pdf = fields.Boolean(string="Show Contact Info on PDF",default=True)
     project_name = fields.Char(string="Project")
     lpo_no = fields.Char(string="LPO No.")
     def _prepare_invoice(self):

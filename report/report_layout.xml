@@ -271,7 +271,9 @@
                         </div>
                         <!-- Message shown at the last page of the document  -->
                         <!-- only show if it is not invoiced -->
-                        <div name="generic_message"
+                        <div 
+                            t-if="doc.show_contact_info_pdf"
+                            name="generic_message"
                             class="row"
                             style="page-break-inside: avoid">
                             <span style="font-size:16px">We sincerely hope that the above offer will
@@ -285,17 +287,25 @@
                         the message -->
 
                             <!-- salesman name -->
-                            <span t-if="doc.user_id.name">
+                            <span t-if="doc.contact_person_id">
+                                <b><span t-field="doc.contact_person_id.name" /></b>
+                            </span>
+                            <span t-else="">
                                 <b><span t-field="doc.user_id.name" /></b>
                             </span>
+
+
                             <!-- job title  -->
-                            <span t-if="doc.user_id.function">
-                                <b>/ <span t-field="doc.user_id.function" /></b>
+                            <span t-if="doc.user_id.function or doc.contact_person_id.function">
+                                <b>/ <span t-if="doc.contact_person_id" t-field="doc.contact_person_id.function" /><span t-else="" t-field="doc.user_id.function" /></b>
                             </span>
                             <br />
                             <!-- mobile number -->
-                            <span t-if="doc.user_id.mobile">
-                                <b>Mob: <span t-field="doc.user_id.mobile" /></b>
+                            <span t-if="doc.contact_person_id">
+                                <b>Mob: <span t-field="doc.contact_person_id.mobile" /></b>
+                            </span>
+                            <span t-else="">
+                                <b>Mob: <span t-if="doc.user_id" t-field="doc.user_id.mobile" /></b>
                             </span>
                             <br />
                         </div>
@@ -582,7 +592,9 @@
                         </div>
                         <!-- Message shown at the last page of the document  -->
                         <!-- only show if it is not invoiced -->
-                        <div name="generic_message"
+                        <div 
+                            t-if="doc.show_contact_info_pdf"
+                            name="generic_message"
                             class="row"
                             style="page-break-inside: avoid">
                             <span style="font-size:16px">We sincerely hope that the above offer will
@@ -596,17 +608,25 @@
                         the message -->
 
                             <!-- salesman name -->
-                            <span t-if="doc.user_id.name">
+                            <span t-if="doc.contact_person_id">
+                                <b><span t-field="doc.contact_person_id.name" /></b>
+                            </span>
+                            <span t-else="">
                                 <b><span t-field="doc.user_id.name" /></b>
                             </span>
+
+
                             <!-- job title  -->
-                            <span t-if="doc.user_id.function">
-                                <b>/ <span t-field="doc.user_id.function" /></b>
+                            <span t-if="doc.user_id.function or doc.contact_person_id.function">
+                                <b>/ <span t-if="doc.contact_person_id" t-field="doc.contact_person_id.function" /><span t-else="" t-field="doc.user_id.function" /></b>
                             </span>
                             <br />
                             <!-- mobile number -->
-                            <span t-if="doc.user_id.mobile">
-                                <b>Mob: <span t-field="doc.user_id.mobile" /></b>
+                            <span t-if="doc.contact_person_id">
+                                <b>Mob: <span t-field="doc.contact_person_id.mobile" /></b>
+                            </span>
+                            <span t-else="">
+                                <b>Mob: <span t-if="doc.user_id" t-field="doc.user_id.mobile" /></b>
                             </span>
                             <br />
                         </div>
