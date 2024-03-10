@@ -175,10 +175,10 @@
                                         <th name="th_description" class="text-start">Description</th>
                                         <th name="th_quantity" class="text-end">Quantity</th>
                                         <th name="th_priceunit" class="text-end text-nowrap">Unit Price</th>
-                                        <th name="th_discount" t-if="display_discount" class="text-end"
+                                        <!-- <th name="th_discount" t-if="display_discount" class="text-end"
                                             groups="product.group_discount_per_so_line">
                                             <span>Disc.%</span>
-                                        </th>
+                                        </th> -->
                                         <th name="th_taxes" class="text-end">Taxes</th>
                                         <th name="th_subtotal" class="text-end">
                                             <span
@@ -186,7 +186,7 @@
                                                 Amount</span>
                                             <span
                                                 groups="account.group_show_line_subtotals_tax_included">Total
-                                                Price</span>
+                                                Price(Incl.Disc)</span>
                                         </th>
                                     </tr>
                                 </thead>
@@ -233,10 +233,10 @@
                                                 <td name="td_priceunit" class="text-end">
                                                     <span t-field="line.price_unit" />
                                                 </td>
-                                                <td t-if="display_discount" class="text-end"
+                                                <!-- <td t-if="display_discount" class="text-end"
                                                     groups="product.group_discount_per_so_line">
                                                     <span t-field="line.discount" />
-                                                </td>
+                                                </td> -->
                                                 <td name="td_taxes" class="text-end">
                                                     <span class="text-capitalize text-nowrap"
                                                         t-esc="',
@@ -324,13 +324,13 @@
                                             t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                             <span class="text-nowrap">Unit Price</span>
                                         </th>
-                                        <th name="th_price_unit" t-if="display_discount"
+                                        <!-- <th name="th_price_unit" t-if="display_discount"
                                             t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                             <span>Disc.%</span>
-                                        </th>
+                                        </th> -->
                                         <th name="th_taxes"
                                             t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                            <span>Taxes</span>
+                                            <span>Tax</span>
                                         </th>
                                         <th name="th_subtotal" class="text-end">
                                             <span
@@ -381,17 +381,23 @@
                                                     t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                                     <span class="text-nowrap" t-field="line.price_unit" />
                                                 </td>
+
+<!-- 
+
                                                 <td t-if="display_discount"
                                                     t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                                    <span class="text-nowrap" t-field="line.discount" />
+                                                    <span t-esc="'%.2f'%(line.discount_amount_currency)"/>
+                                                </td> -->
+                                                <td name="td_amount_tax" class="text-end">
+                                                    <span t-field="line.l10n_ae_vat_amount" />
                                                 </td>
-                                                <td
+                                                <!-- <td
                                                     t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                                     <span
                                                         class="text-capitalize text-nowrap"
                                                         t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"
                                                         id="line_tax_ids" />
-                                                </td>
+                                                </td> -->
                                                 <td class="text-end o_price_total">
                                                     <span class="text-nowrap"
                                                         t-field="line.price_subtotal"
