@@ -440,6 +440,13 @@
                                         t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
                                         <table class="table table-sm" style="page-break-inside: avoid;">
 
+
+                                            <tr class="text-start" t-if="o.amount_discount>0">
+                                                <th style="font-wight:bold;">Discount</th>
+                                                <td class="text-end">
+                                                    <span t-esc="str(-o.amount_discount) + ' ' + o.currency_id.name"/>
+                                                </td>
+                                            </tr>
                                             <!--Tax totals-->
                                             <t t-set="tax_totals" t-value="o.tax_totals" />
                                             <t t-call="account.document_tax_totals" />
